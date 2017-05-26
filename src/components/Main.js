@@ -17,6 +17,8 @@ import IfUserLogin from './IfUserLogin'
 import InpurToUpperCase from './InputToUpperCase'
 import Selected from './Selected'
 import MoreInput from './MoreInput'
+import BoilingVerdict from './BoilingVerdict'
+import TemperatureInput from './TemperatureInput'
 
 let yeomanImage = require('../images/yeoman.png');
 let helloWorld = 'helloWorld'
@@ -25,7 +27,8 @@ let titleNumber = 123
 class AppComponent extends React.Component {
   state = {
     data: new Date(),
-    flage: true
+    flage: true,
+    temperature: ''
   }
   updatatime() {
     this.setState({data: new Date()})
@@ -40,18 +43,25 @@ class AppComponent extends React.Component {
     }));
     console.log(this.refs.flage1.props.flage)
   }
+  changeTemperature(e) {
+    this.setState({temperature: e.target.value});
+  }
   render() {
     return (
       <div className="index">
-        <button onClick={:: this.changeFlage}>flage</button>
-        <IfUserLogin flage={this.state.flage} ref="flage1"></IfUserLogin>
-        <TodoApp></TodoApp>
-        <img src={yeomanImage} alt="Yeoman Generator"/>
-        <h1 className={helloWorld}>hello world!</h1>
-        <h2>{new Date().toLocaleTimeString()}</h2>
-        <InpurToUpperCase></InpurToUpperCase>
-        <Selected></Selected>
-        <MoreInput></MoreInput>
+        <input type="text" name="name" value={this.state.temperature} onChange={:: this.changeTemperature}/>
+        <BoilingVerdict celsius={parseFloat(this.state.temperature)}></BoilingVerdict>
+        <TemperatureInput scale='c'></TemperatureInput>
+        <TemperatureInput scale='f'></TemperatureInput>
+        {/* <button onClick={:: this.changeFlage}>flage</button>
+          <IfUserLogin flage={this.state.flage} ref="flage1"></IfUserLogin>
+          <TodoApp></TodoApp>
+          <img src={yeomanImage} alt="Yeoman Generator"/>
+          <h1 className={helloWorld}>hello world!</h1>
+          <h2>{new Date().toLocaleTimeString()}</h2>
+          <InpurToUpperCase></InpurToUpperCase>
+          <Selected></Selected>
+        <MoreInput></MoreInput> */}
         {/* <Foo></Foo>
           <TextInput></TextInput>
           <StateText></StateText>
