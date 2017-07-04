@@ -28,7 +28,8 @@ class AppComponent extends React.Component {
   state = {
     data: new Date(),
     flage: true,
-    temperature: ''
+    temperature: '',
+    scale: 'c'
   }
   updatatime() {
     this.setState({data: new Date()})
@@ -41,19 +42,48 @@ class AppComponent extends React.Component {
     this.setState((prevState) => ({
       flage: !prevState.flage
     }));
-    console.log(this.refs.flage1.props.flage)
   }
   changeTemperature(e) {
     this.setState({temperature: e.target.value});
   }
+  handleCelsiusChange(temperature) {
+    this.setState({scale: 'c', temperature});
+  }
+
+  handleFahrenheitChange(temperature) {
+    this.setState({scale: 'f', temperature});
+  }
+
   render() {
+    function toFahrenheit(celsius) {
+      return (celsius * 9 / 5) + 32;
+    }
+    function toCelsius(fahrenheit) {
+      return (fahrenheit - 32) * 5 / 9;
+    }
+    function tryConvert(temperature, convert) {
+      const input = parseFloat(temperature);
+      if (Number.isNaN(input)) {
+        return '';
+      }
+      const output = convert(input);
+      const rounded = Math.round(output * 1000) / 1000;
+      return rounded.toString();
+    }
+    const scale = this.state.scale;
+    const temperature = this.state.temperature;
+    const celsius = scale === 'f'
+      ? tryConvert(temperature, toCelsius)
+      : temperature;
+    const fahrenheit = scale === 'c'
+      ? tryConvert(temperature, toFahrenheit)
+      : temperature;
     return (
       <div className="index">
         <input type="text" name="name" value={this.state.temperature} onChange={:: this.changeTemperature}/>
         <BoilingVerdict celsius={parseFloat(this.state.temperature)}></BoilingVerdict>
-        <TemperatureInput scale='c'></TemperatureInput>
-        <TemperatureInput scale='f'></TemperatureInput>
-        {/* <button onClick={:: this.changeFlage}>flage</button>
+        <TemperatureInput scale="c" temperature={celsius} onTemperatureChange={:: this.handleCelsiusChange}/>
+        <TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={:: this.handleFahrenheitChange}/> {/* <button onClick={:: this.changeFlage}>flage</button>
           <IfUserLogin flage={this.state.flage} ref="flage1"></IfUserLogin>
           <TodoApp></TodoApp>
           <img src={yeomanImage} alt="Yeoman Generator"/>

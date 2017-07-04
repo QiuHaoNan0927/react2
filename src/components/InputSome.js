@@ -3,9 +3,9 @@ import React, {Component} from 'react'
 class InputSome extends Component {
   constructor() {
     super()
-  }
-  state = {
-    value: 'hello'
+    this.state = {
+      value: 'hello'
+    }
   }
   handleChange(e) {
     this.setState({value: e.target.value})

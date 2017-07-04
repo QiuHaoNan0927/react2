@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 class FooList extends Component {
   constructor() {
     super()
+    this.state = {}
   }
   render() {
     const arr = ['a', 'b', 'c']
