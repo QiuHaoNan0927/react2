@@ -19,22 +19,19 @@ import Selected from './Selected'
 import MoreInput from './MoreInput'
 import BoilingVerdict from './BoilingVerdict'
 import TemperatureInput from './TemperatureInput'
-
+import Redux from './Redux'
 let yeomanImage = require('../images/yeoman.png');
 let helloWorld = 'helloWorld'
 let titleNumber = 123
 
 class AppComponent extends React.Component {
-  state = {
-    data: new Date(),
-    flage: true,
-    temperature: '',
-    scale: 'c'
-  }
+  state = {}
 
   render() {
     return (
-      <div className="index"></div>
+      <div className="index">
+        <Redux></Redux>
+      </div>
     );
   }
 }

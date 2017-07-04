@@ -1,7 +1,12 @@
-import 'core-js/fn/object/assign';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/Main';
+import React from 'react'
+import {render} from 'react-dom'
+import {Provider} from 'react-redux'
+import App from './containers/App'
+import configureStore from './store/configureStore'
 
-// Render the main component into the dom
-ReactDOM.render(<App />, document.getElementById('app'));
+const store = configureStore()
+
+render(
+  <Provider store={store}>
+  <App/>
+</Provider>, document.getElementById('app'))
